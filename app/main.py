@@ -1,5 +1,6 @@
 from fastapi import FastAPI
 from app.api.documentation import router as documentation_router
+from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI(
     title="DocuMind AI",
@@ -22,3 +23,13 @@ async def root():
 @app.get("/health")
 async def health():
     return {"status": "healthy"}
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=[
+        "http://localhost:3000",
+    ],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
